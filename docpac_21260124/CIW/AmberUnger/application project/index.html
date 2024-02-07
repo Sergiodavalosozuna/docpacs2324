@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        function setCookie() {
+            var name = document.getElementById('name').value;
+            if (name === '') {
+                alert('Name field is left blank.');
+                return false;
+            } else {
+                document.cookie = "username=" + name + "; path=/";
+                alert('Cookie for user name set.');
+                return false;
+            }
+        }
+
+        function openNewWindow() {
+            var name = getCookie("username");
+            if (name !== "") {
+                var newWindow = window.open("", "newWindow", "width=505,height=50");
+                newWindow.document.write("<h1>Welcome, " + name + "!  how are you today?</h1>");
+            }
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+    </script>
+</head>
+
+<body>
+    <form onsubmit="return setCookie()">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <input type="submit" value="Submit">
+    </form>
+    <button onclick="openNewWindow()">Open New Window</button>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Project</title>
+    <script>
+        function createCookieAndPreventSubmit(event) {
+            event.preventDefault();
+            var name = document.getElementById('name').value;
+            if (name === '') {
+                alert('Name field cannot be left blank');
+                return false;
+            } else {
+                document.cookie = `userName=${name}`;
+                return false;
+            }
+        }
+
+        function openNewWindowAndDisplayMessage() {
+            var name = document.cookie.replace(/(?:(?:^|.*;\s*)userName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+            var newWindow = window.open("", "new window", "width=300,height=200");
+            newWindow.document.write(`<h1>Welcome, ${name}</h1>`);
+        }
+    </script>
+</head>
+
+<body>
+    <form onsubmit="return createCookieAndPreventSubmit(event)">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <input type="submit" value="Submit">
+        <button type="button" onclick="openNewWindowAndDisplayMessage()">Open New Window</button>
+    </form>
+</body>
+
+</html>

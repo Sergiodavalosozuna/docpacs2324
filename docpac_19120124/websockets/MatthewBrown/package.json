@@ -1,0 +1,17 @@
+{
+  "name": "websocket-project",
+  "version": "1.0.0",
+  "description": "websocket practice / real time chat",
+  "main": "index.js",
+  "scripts": {
+    "devStart": "nodemon server.js"
+  },
+  "author": "Matthew Brown",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "^4.7.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

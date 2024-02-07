@@ -1,0 +1,85 @@
+body {
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: black;
+}
+
+form {
+    margin-top: auto;
+}
+
+@font-face {
+    font-family: Genos;
+    src: url(Genos-Italic-VariableFont_wght.ttf);
+}
+
+#message-container {
+    width: 98vw;
+}
+
+#message-container div {
+    word-wrap: break-word;
+    font-size: 6vh;
+    font-family: Genos;
+    color: beige;
+    background-color: #149414;
+
+}
+
+#message-container div:nth-child(2n) {
+    background-color: rgba(0, 0, 0, 0);
+
+}
+
+#send-container {
+    width: 98vw;
+}
+
+
+#send-container div {
+    position: absolute;
+    width: 100%;
+}
+
+#user-container {
+    text-align: center;
+    padding-left: 1%;
+    padding-right: 1%;
+    font-size: 6vh;
+    font-family: Genos;
+    color: beige;
+    background-color: #948114;
+}
+
+#user-container div {
+    word-wrap: break-word;
+    font-size: 6vh;
+    font-family: Genos;
+    color: beige;
+    background-color: #149414;
+}
+
+button {
+    background-color: #149414;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    cursor: pointer;
+}
+
+input {
+    border: none;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    width: 88vw;
+}
