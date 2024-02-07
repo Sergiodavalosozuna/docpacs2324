@@ -1,10 +1,24 @@
-const io = require('socket.io')(3000, {
+const express = require('express')
+const app = express()
+const { Server } = require('socket.io')
+
+const port = 3000;
+app.set('view engine', 'ejs')
+
+
+app.use(express.static('views'))
+
+app.get('/', (req, res) => {
+    res.render('index')
+})
+const expressServer = app.listen(3000)
+const io = new Server(expressServer, {
     cors: {
         origin: "*",  // Allow requests from all origins
         methods: ["GET", "POST"]
     }
-})
 
+})
 const users = {}
 
 io.on('connection', socket => {
@@ -12,7 +26,7 @@ io.on('connection', socket => {
         users[socket.id] = name
         socket.broadcast.emit('user-connected', name)
 
-    
+
     })
     socket.on('send-chat-message', message => {
         socket.broadcast.emit('chat-message', { message: message, name: users[socket.id] })
