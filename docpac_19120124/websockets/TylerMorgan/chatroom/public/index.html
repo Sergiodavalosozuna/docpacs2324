@@ -1,0 +1,47 @@
+<h1>REAL!!!!!! TIME!!!!!! MESSAGES!!!!!!!!</h1>
+<pre id="messages" style="height: 400px;; overflow: scroll">Welcome to the chatroom</pre>
+<input type="text" id="messageBox" placeholder="YOUR MESSAGES!!!!!!! HERE!!!!!" style="display: block; width: 100%; margin-bottom: 10px; padding: 10px;">
+<button id="send" title="send message" style="width: 100%; height: 30px;">SSSSSSEEEEENNNNNDDDDDD NNNNNNOOOOOOWWWWWW</button>
+<body style="background-color: cadetblue;">
+<script>
+    (function() {
+        const person = prompt("What is your name?:");
+        const sendButton = document.querySelector('#send')
+        const messages = document.querySelector('#messages')
+        const messageBox = document.querySelector('#messageBox')
+
+        let ws;
+
+        function showMessage(message) {
+            messages.textContent += `\n\n${message}` 
+            messages.scrollTop = messages.scrollHeight
+            messageBox.value = '';
+        }
+
+        function init() {
+           if (ws) {
+            ws.onerror = ws.onopen = ws.onclose = null;
+            ws.close();
+           }
+           ws = new WebSocket('ws://172.16.3.151:3000/', 'echo-protocol');
+              ws.onopen = () => {
+                console.log('Connection started');
+              }
+              ws.onmessage = ({ data }) => showMessage(data);
+              ws.onclose = function() {
+                ws = null;
+              }
+        }
+        sendButton.onclick = function() {
+            if (!ws) {
+                showMessage("No WebSocket connection :(");
+                return;
+            }
+            ws.send(person + '<' + new Date() + '>' + messageBox.value);
+            showMessage(person + '<' + new Date() + '>' + messageBox.value);
+        }
+
+        init();
+    })();
+</script>
+</body>

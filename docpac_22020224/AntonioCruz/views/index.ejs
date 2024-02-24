@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Canvas with Socket.IO</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.js">
+    </script>
+    <style>
+        #canvas {
+            background-color: black;
+        }
+
+        body {
+            margin: 50;
+            padding: 50;
+        }
+    </style>
+</head>
+
+<body> <canvas id="canvas" width="1875" height="940"></canvas>
+    <script>
+        const socket = io();
+
+        let coins = [];
+        let players = {};
+
+        class Coin {
+            constructor(x, y) {
+                this.x = x || 0;
+                this.y = y || 0;
+            }
+        }
+
+        for (let i = 0; i < 5; i++) {
+            let tempX = Math.round(Math.random() * window.innerWidth)
+            let tempY = Math.round(Math.random() * window.innerHeight)
+            coins.push(new Coin(tempX, tempY))
+        }
+
+
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        document.addEventListener('keydown', handleKeydown);
+        document.addEventListener('keyup', handleKeyup);
+
+        // handle key down events
+        function handleKeydown(event) {
+            const key = event.key;
+            // emit the key event to teh server
+            socket.emit('keydown', { key });
+        }
+
+        // handle key up events
+        function handleKeyup(event) {
+            const key = event.key;
+            // emit the key event to teh server
+            socket.emit('keyup', { key });
+        }
+
+        // get socket message for update
+        socket.on('update', function (data) {
+            for (var player in data.players) {
+                var { x, y } = data.players[player];
+                players[data.players[player].playerId] = { x: x, y: y }
+            }
+        })
+
+        function draw() {
+            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            for (var player in players) {
+                // draw a circle at the recieved positon
+                ctx.beginPath();
+                ctx.arc(players[player].x, players[player].y, 20, 0, 2 * Math.PI);
+                if (players[player].playerId == socket.id) {
+                    ctx.fillStyle = 'blue'
+                } else {
+                    ctx.fillStyle = 'red'
+                }
+                ctx.fill()
+            }
+            for (var coin in coins) {
+                // draw a circle at the recieved positon
+                ctx.beginPath();
+                ctx.fillStyle = 'yellow'
+                ctx.arc(coins[coin].x, coins[coin].y, 10, 0, 2 * Math.PI);
+                ctx.fill()
+            }
+            // This next line hadto go in the draw() function, not draw(), and not outside of the draw()
+            // This ensures that after drawing, it will wait for the next animation frame to call draw() again
+            requestAnimationFrame(draw);
+        }
+
+        // This starts the loop the first time, then requestAnimationFrame loops it
+        draw();
+
+    </script>
+</body>
+
+</html>
