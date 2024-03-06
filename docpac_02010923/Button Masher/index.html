@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Button Masher</h1>
+    <div id="Score Box"></div>
+    <div id="Timer Box" style='font-size: 50px;'></div>
+    <div id="Direction Box" style='font-size: 50px;'></div>
+    <div id="buttons" style="display: flex; flex-direction: column;"></div>
+</body>
+<script>
+    var lastState = false;
+    var Score = 0;
+    var Timer = 20;
+    var Direction = 0;
+    var array = ["Up", "Right", "Down", "Left"]
+    controllerDirection = 0;
+    window.addEventListener('gamepadconnected', (event) => {
+        const update = () => {
+            const output = document.getElementById('buttons');
+            output.innerHTML = ''; // clear the output
+
+            for (const gamepad of navigator.getGamepads()) {
+                if (gamepad.button[0].pressed != lastState) {
+                    lastState = gamepad.button[0].pressed
+                    if (lastState) {
+                        if (gamepad.buttons[0].pressed) {
+                            if (timer > 0) {
+                                switch (Direction) {
+                                    case 0:
+                                        if (gamepad.axes[1] <= -0.8) {
+                                            Score += 1
+                                        }
+                                        break;
+                                    case 1:
+                                        if (gamepad.axes[1] >= 0.8) {
+                                            Score += 1
+                                        };
+                                        break;
+                                    case 2:
+                                        if (gamepad.axes[0] >= 0.8) {
+                                            Score += 1
+                                        };
+                                        break;
+                                    case 3:
+                                        if (gamepad.axes[0] <= -0.8) {
+                                            Score += 1
+                                        };
+
+                                }
+                                document.getElementById("Score Box").innerHTML = Score
+                            }
+                        }
+
+                    }
+                }
+
+            }
+            requestAnimationFrame(update);
+
+        };
+        update();
+
+
+
+    });
+
+
+
+
+
+    document.getElementById("Timer Box").innerHTML = Timer
+    function TimeDecrease() {
+        //console.log(Timer)
+        Timer--
+        document.getElementById("Timer Box").innerHTML = Timer
+        if (Timer == 0) {
+            clearInterval(y)
+            clearInterval(x)
+        }
+    }
+    var y = setInterval(TimeDecrease, 1000)
+    function RandomInterger() {
+        Direction = array[Math.floor(Math.random() * 4)]
+        console.log(Direction)
+        document.getElementById("Direction Box").innerHTML = Direction
+    }
+    var x = setInterval(RandomInterger, 2000)
+
+
+</script>
+
+</html>
