@@ -1,0 +1,15 @@
+{
+  "name": "docpacs2324",
+  "version": "1.0.0",
+  "description": "Taysaun Johnson\r Brandon Camacho\r Talon Pauling\r Amber unger\r Carmen Cedano\r Alexander Plitt\r Ryan Stevenson\r Isabella Feliciano",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2"
+  }
+}
