@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I observe you</title>
+    <style>
+
+        @font-face {
+            font-family: "comic-sans";
+            src: url("Ldfcomicsanslight-6dZo.ttf");
+        }
+
+        * {
+            font-family: "comic-sans";
+            font-size: 5vw;
+            text-align: center;
+        }
+        
+
+    </style>
+</head>
+<body>
+
+    <button id="bobux">Click Here For Free Bobux!!1!!1!</button>
+    <div id="gug"></div>
+
+</body>
+
+<script>
+    let crd = navigator.geolocation.getCurrentPosition(function(pos) {
+       lat = pos.coords.latitude;
+       lon = pos.coords.longitude;
+    });
+    document.getElementById("bobux").addEventListener("click", function() {
+        document.getElementById("gug").innerHTML = "<img src='feelingThisRN.png' alt='bobux'>";
+        document.getElementById("gug").innerHTML += "<p>Latitude: " + lat + "</p>";
+        document.getElementById("gug").innerHTML += "<p>Longitude: " + lon + "</p>";
+    });
+
+</script>
+
+</html>

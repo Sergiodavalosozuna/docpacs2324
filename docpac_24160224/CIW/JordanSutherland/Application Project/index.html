@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Example: Database and AJAX</title>
+</head>
+
+<body>
+    <h2>CIW JavaScript Specialist</h2>
+    <hr />
+    <script type="text/javascript">
+        function getXMLHttpRequest() {
+            if (window.XMLHttpRequest) {
+                return new window.XMLHttpRequest;
+            } else {
+                try {
+                    return new ActiveXObject("MSXML2.XMLHTTP.3.0");
+                } catch (ex) {
+                    return null;
+                }
+            }
+        }
+
+        http = getXMLHttpRequest();
+        function requestCustomerInfo() {
+            http.open("GET", "answers.xml", true);
+            http.onreadystatechange = function () {
+                if (http.readyState == 4) {
+                    var checkedValue = document.querySelector('input[name="areYou"]:checked').value;
+                    document.getElementById('answer').innerHTML = http.responseXML.documentElement.getElementsByTagName("Answer")[checkedValue].getElementsByTagName("Reasoning")[0].firstChild.nodeValue;
+                }
+            }
+            http.send(null);
+        }
+    </script>
+    </head>
+
+    <body>
+        <p>Do you like agungus?</p>
+        <p>Not Yes <input type="radio" name="areYou" value="0"></p>
+        <p>Not No <input type="radio" name="areYou" value="1"></p>
+        <p>Not yes and isn't no <input type="radio" name="areYou" value="1"></p>
+        <p>Yes but isn't not no <input type="radio" name="areYou" value="0"></p>
+        <p><input type="button" value="Get Information" onclick="requestCustomerInfo()"/></p>
+        Reasoning:<div id="answer"></div>
+    </body>
+
+</html>
